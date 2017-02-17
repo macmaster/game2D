@@ -2,6 +2,7 @@ package com.ronny.driver;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.geom.AffineTransform;
 
 import javax.swing.ImageIcon;
 
@@ -61,10 +62,13 @@ public class SpriteDriver {
 	
 	public void draw(Graphics2D g) {
 		g.drawImage(this.backgroundImage, 0, 0, null);
+		AffineTransform transform = new AffineTransform();
 		for (int i = 0; i < n; i++) {
 			int x = Math.round(this.sprites[i].getX());
 			int y = Math.round(this.sprites[i].getY());
-			g.drawImage(this.sprites[i].getImage(), x, y, null);
+			transform.setToTranslation(x, y);
+			transform.scale(1, 1);
+			g.drawImage(this.sprites[i].getImage(), transform, null);
 		}
 	}
 	
