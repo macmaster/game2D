@@ -1,7 +1,6 @@
 package com.ronny.graphics;
 
 import java.awt.DisplayMode;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
@@ -10,6 +9,7 @@ import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+
 import javax.swing.JFrame;
 
 public class ScreenManager extends JFrame {
@@ -18,6 +18,7 @@ public class ScreenManager extends JFrame {
 	private int width, height;
 	private final String DEFAULT_TITLE = "com.ronny.game";
 	private static final int DEFAULT_WIDTH = 400, DEFAULT_HEIGHT = 400;
+	private static final long serialVersionUID = 1L;
 	
 	// gpu configurations.
 	private DisplayMode displayMode;
@@ -65,26 +66,6 @@ public class ScreenManager extends JFrame {
 			return true;
 		}
 		return false;
-	}
-	
-	/** enterWindowScreenMode() <br>
-	 * 
-	 * Switches to window mode. <br>
-	 */
-	public void enterWindowScreenMode() {
-		this.setUndecorated(false);
-		this.setResizable(true);
-		this.setTitle(DEFAULT_TITLE);
-		this.width = DEFAULT_WIDTH;
-		this.height = DEFAULT_HEIGHT;
-		this.setSize(this.width, this.height);
-		this.setVisible(true);
-		this.setDefaultCloseOperation(3);
-		
-		// active rendering 
-		// double buffering + page flip.
-		this.setIgnoreRepaint(true);
-		this.createBufferStrategy(2);
 	}
 	
 	/** exitScreenMode() <br>
@@ -137,17 +118,6 @@ public class ScreenManager extends JFrame {
 		return null;
 	}
 	
-	private DisplayMode configureDisplayMode() {
-		for (DisplayMode mode : device.getDisplayModes()) {
-			if (mode.getHeight() > this.height || mode.getWidth() > this.width) {
-				this.height = mode.getHeight();
-				this.width = mode.getWidth();
-				this.displayMode = mode;
-			}
-		}
-		return this.displayMode;
-	}
-	
 	public DisplayMode getDisplayMode() {
 		return this.device.getDisplayMode();
 	}
@@ -175,4 +145,26 @@ public class ScreenManager extends JFrame {
 	public int getHeight() {
 		return this.height;
 	}
+	
+	/** enterWindowScreenMode() <br>
+	 * 
+	 * Switches to window mode. <br>
+	 */
+	@Deprecated
+	public void enterWindowScreenMode() {
+		this.setUndecorated(false);
+		this.setResizable(true);
+		this.setTitle(DEFAULT_TITLE);
+		this.width = DEFAULT_WIDTH;
+		this.height = DEFAULT_HEIGHT;
+		this.setSize(this.width, this.height);
+		this.setVisible(true);
+		this.setDefaultCloseOperation(3);
+		
+		// active rendering 
+		// double buffering + page flip.
+		this.setIgnoreRepaint(true);
+		this.createBufferStrategy(2);
+	}
+	
 }
