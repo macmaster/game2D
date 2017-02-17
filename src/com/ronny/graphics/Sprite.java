@@ -36,6 +36,7 @@ public class Sprite {
 	public void update(long elapsedTime) {
 		this.x += this.vx * elapsedTime;
 		this.y += this.vy * elapsedTime;
+		this.animation.update(elapsedTime);
 	}
 	
 	/**
