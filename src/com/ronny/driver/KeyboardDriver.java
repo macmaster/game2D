@@ -1,10 +1,15 @@
 package com.ronny.driver;
 
+<<<<<<< HEAD
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+=======
+import java.awt.*;
+import java.awt.event.*;
+>>>>>>> origin/master
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,13 +52,13 @@ public class KeyboardDriver extends Core implements KeyListener {
 	
 	@Override
 	public void draw(Graphics2D g) {
-		// print message queue.
-		//		Window window = screen.getFullScreenWindow();
-		//		
-		//		int red = (int) (Math.random() * 255);
-		//		int blue = (int) (Math.random() * 255);
-		//		int green = (int) (Math.random() * 255);		
-		//		Color RANDOM_COLOR = new Color(red, blue, green);
+        // // print message queue.
+        // Window window = screen.getFullScreenWindow();
+        //
+        // int red = (int) (Math.random() * 255);
+        // int blue = (int) (Math.random() * 255);
+        // int green = (int) (Math.random() * 255);
+        // Color RANDOM_COLOR = new Color(red, blue, green);
 		
 		g.setColor(BACKGROUND_COLOR);
 		g.fillRect(0, 0, screen.getWidth(), screen.getHeight());
