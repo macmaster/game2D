@@ -87,17 +87,15 @@ public class MouseLookDriver extends Core implements KeyListener, MouseMotionLis
         imageWidth = (int) (backgroundImage.getWidth(null) * imageScale);
         imageHeight = (int) (backgroundImage.getHeight(null) * imageScale);
         imageHeight = Math.max(height, imageHeight);
-        if (imageLocation.x > 0)
-            imageLocation.x = 0;
-        if (imageLocation.y > 0)
-            imageLocation.y = 0;
-        if (imageLocation.x < width - imageWidth)
-            imageLocation.x = width - imageWidth;
-        if (imageLocation.y < height - imageHeight)
-            imageLocation.y = height - imageHeight;
+        // bound x and y.
+        imageLocation.x = (int) limit(imageLocation.x, ((width - imageWidth) - centerLocation.x) / imageScale, 0);
+        imageLocation.y = (int) limit(imageLocation.y, ((height - imageHeight) - centerLocation.y) / imageScale, 0);
+        int x = (int) (imageLocation.x * imageScale + centerLocation.x);
+        int y = (int) (imageLocation.y * imageScale + centerLocation.y);
+        x = (int) limit(x, width - imageWidth, 0);
+        y = (int) limit(y, height - imageHeight, 0);
 
         // g.drawImage(backgroundImage, imageLocation.x, imageLocation.y, null);
-        int x = imageLocation.x, y = imageLocation.y;
         g.drawImage(backgroundImage, x, y, imageWidth, imageHeight, null);
 
         g.setColor(FOREGROUND_COLOR);
@@ -144,19 +142,28 @@ public class MouseLookDriver extends Core implements KeyListener, MouseMotionLis
         }
 
         // update mouse location.
-        mouseLocation.setLocation(event.getPoint());
+        mouseLocation.setLocation(centerLocation);
     }
 
-    /* (non-Javadoc)
-     * @see java.awt.event.MouseWheelListener#mouseWheelMoved(java.awt.event.MouseWheelEvent)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.awt.event.MouseWheelListener#mouseWheelMoved(java.awt.event.
+     * MouseWheelEvent)
      */
     @Override
     public void mouseWheelMoved(MouseWheelEvent event) {
         // TODO Auto-generated method stub
         int clicks = event.getWheelRotation();
-        float floor = 0.35f, ceiling = 2.0f;
-        this.imageScale -= clicks * 0.05;
-        this.imageScale = Math.max(floor, imageScale);
-        this.imageScale = Math.min(imageScale, ceiling);
+        final float floor = 0.35f, ceiling = 2.0f;
+        float dscale = (float) (clicks * 0.1);
+        this.imageScale -= dscale;
+        this.imageScale = this.limit(imageScale, floor, ceiling);
+    }
+
+    private float limit(float value, float floor, float ceiling) {
+        value = Math.max(floor, value);
+        value = Math.min(value, ceiling);
+        return value;
     }
 }
