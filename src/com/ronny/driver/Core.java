@@ -91,8 +91,8 @@ public abstract class Core {
 	/**
 	 * Load an image as a resource. <br>
 	 */
-	public Image loadImage(String name) {
-		return new ImageIcon(this.getClass().getResource(name)).getImage();
+	public static Image loadImage(String name) {
+		return new ImageIcon(Core.class.getResource(name)).getImage();
 	}
 	
 	/**
